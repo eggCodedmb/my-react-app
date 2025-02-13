@@ -1,27 +1,37 @@
-const meteorAnimation = ({ count }) => {
-  return <div className="meteor-container"></div>;
+import "../assets/meteorAnimation.css";
+import { useState, useRef, useLayoutEffect } from "react";
+import useResizeObserver from "../hooks/useResizeObserver";
+
+const MeteorAnimation = ({ count = 50 }) => {
+  const [ref, size] = useResizeObserver();
+
+  return (
+    <div className="meteor-container" ref={ref}>
+      {star(count, size.width)}
+    </div>
+  );
 };
 
 // 流星
-const star = () => {
-  const star = [];
+const star = (count, width) => {
+  const stars = [];
   for (let i = 0; i < count; i++) {
-    const position = randomPosition(viewWidth); // 使用最新的视口宽度
+    const position = randomPosition(width); // 使用最新的视口宽度
     const size = randomSize();
-    const opacity = randomOpacity();
-    const animation = randomAnimation();
-    const animationDuration = randomAnimationDuration();
+    const animationDuration = randomAnimationDuration(); // 随机动画持续时间
     const animationDelay = randomDelay();
-    flakes.push(
+    const animationName = "fall-diagonal"; // 使用新的动画名称
+
+    stars.push(
       <div
         key={i}
+        className="star"
         style={{
-          left: `${position}px`, // 加上偏移
-          animation: `${animation} ${animationDuration} infinite`,
-          animationDelay: animationDelay,
-          opacity: opacity, // 随机透明度
+          left: `${position}px`,
+          animation: `${animationName} ${animationDuration} infinite`,
           width: size,
           height: size,
+          animationDelay: `${animationDelay}s`,
         }}
       >
         <svg
@@ -42,17 +52,12 @@ const star = () => {
       </div>
     );
   }
-  return star;
-};
-
-// 随机大小
-const getRandomSize = () => {
-  return `${Math.random() * 10 + 10}px`;
+  return stars;
 };
 
 // 随机的位置，根据视口宽度来调整
-const randomPosition = (viewWidth) => {
-  return Math.random() * viewWidth; // 依赖于动态视口宽度
+const randomPosition = (width) => {
+  return Math.random() * width; // 依赖于动态视口宽度
 };
 
 // 随机的大小 10-20px
@@ -70,12 +75,9 @@ const randomDelay = () => {
   return `${Math.random() * 5}s`;
 };
 
-// 随机的动画 fall-right
-const randomAnimation = () => {
-  return "fall-right"; 
+// 随机的动画时间 4-6s
+const randomAnimationDuration = () => {
+  return `${Math.random() * 2 + 4}s`;
 };
 
-// 随机的动画时间 5-10s
-const randomAnimationDuration = () => {
-  return `${Math.random() * 5 + 5}s`;
-};
+export default MeteorAnimation;

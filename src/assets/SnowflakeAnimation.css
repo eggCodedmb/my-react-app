@@ -1,35 +1,49 @@
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* 防止页面滚动条出现 */
-    background-color: #222; /* 深色背景 */
+/* 容器样式 */
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* 雪花样式 */
+.snowflake {
+  position: absolute;
+  top: -20px; /* 初始位置稍微在视口之外 */
+  user-select: none;
+  pointer-events: none; /* 防止干扰用户操作 */
+  animation-timing-function: linear;
+}
+
+/* 雪花动画 */
+@keyframes fall-right {
+  0% {
+    transform: translateX(0) translateY(-100px); /* 起始位置 */
   }
-  
-  /* 容器样式 */
-  .container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+  100% {
+    transform: translateX(200px) translateY(100vh); /* 流星到达屏幕底部，并向右偏移 */
   }
-  
-  /* 雪花样式 */
-  .snowflake {
-    position: absolute;
-    top: -20px; /* 初始位置稍微在视口之外 */
-    font-size: 20px; /* 雪花的默认大小 */
-    color: white;
-    user-select: none;
-    pointer-events: none; /* 防止干扰用户操作 */
-    animation-timing-function: linear;
+}
+
+@keyframes fall-left {
+  0% {
+    transform: translateX(0) translateY(-100px); /* 起始位置 */
+    opacity: 1;
   }
-  
-  /* 雪花下落动画 */
-  @keyframes fall {
-    0% {
-      top: -10%;
-    }
-    100% {
-      top: 110%;
-    }
+  30% {
+    opacity: 0.9;
   }
+  50% {
+    opacity: 0.8;
+  }
+  70% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(-200px) translateY(100vh);
+    opacity: 0.2;
+  }
+}
