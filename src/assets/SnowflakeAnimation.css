@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* 防止页面滚动条出现 */
+    background-color: #222; /* 深色背景 */
+  }
+  
+  /* 容器样式 */
+  .container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* 雪花样式 */
+  .snowflake {
+    position: absolute;
+    top: -20px; /* 初始位置稍微在视口之外 */
+    font-size: 20px; /* 雪花的默认大小 */
+    color: white;
+    user-select: none;
+    pointer-events: none; /* 防止干扰用户操作 */
+    animation-timing-function: linear;
+  }
+  
+  /* 雪花下落动画 */
+  @keyframes fall {
+    0% {
+      top: -10%;
+    }
+    100% {
+      top: 110%;
+    }
+  }
